@@ -21,5 +21,7 @@ app.route("/predictions", predictionsRoute);
 app.route("/sources", sourcesRoute);
 app.route("/learning", learningRoute);
 app.route("/pipeline", pipelineRoute);
+app.route("/rules", rulesRoute);
+
 
 export default app;

@@ -29,6 +29,9 @@ export function Dashboard(props: {
   const [minProfitPct, setMinProfitPct] = useState(props.minProfitPct);
 
   const top = useMemo(() => recs.slice(0, 25), [recs]);
+  
+  const cards = await fetchCards(100);
+	setCards(cards.cards);
 
   async function refresh() {
     setLoading(true);
@@ -125,6 +128,14 @@ export function Dashboard(props: {
           </div>
         )}
       </div>
+	  
+	  {cards.map(c => (
+		<div key={c.cardId} className="card">
+			<b>{c.name}</b>
+			<div>ID: {c.cardId}</div>
+			<div>Price: {c.price ?? "—"}</div>
+		</div>
+	))}
 
       {err && (
         <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-200">

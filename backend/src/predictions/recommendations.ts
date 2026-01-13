@@ -1,45 +1,59 @@
-import { d1All } from "../db/d1";
-import { computeMinSellPrice, passesHardRules } from "../logic/rules/hardRules";
+import { useEffect, useState } from "react";
+import { apiGet } from "../api";
 
-export async function buildRecommendations(env: any, opts: { budget: number; minProfitPct: number }) {
-  const rows = await d1All<any>(env, `
-    SELECT * FROM cards
-    WHERE price IS NOT NULL AND price <= ?
-    ORDER BY updatedAt DESC
-    LIMIT 500
-  `, [opts.budget]);
+type Rec = {
+  cardId: string;
+  buy: number;
+  minSell: number;
+  expectedSell: number;
+  expectedProfitPct: number;
+  confidence: number;
+  risk: string;
+};
 
-  const recs = [];
+export function Recommendations({ budget, minProfit }: {
+  budget: number;
+  minProfit: number;
+}) {
+  const [recs, setRecs] = useState<Rec[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  for (const card of rows) {
-    const ok = passesHardRules(card, {
-      budget: opts.budget,
-      minProfitPct: opts.minProfitPct,
-      eaTaxPct: 5,
-      minDaysAfterRelease: 7,
-      excludedEventTags: ["TOTW", "PROMO"]
-    });
-
-    if (!ok.ok) continue;
-
-    const buy = Number(card.price);
-    const minSell = computeMinSellPrice(buy, { eaTaxPct: 5, minProfitPct: opts.minProfitPct });
-    const expectedSell = Math.ceil(minSell * 1.15);
-    const profitPct = ((expectedSell * 0.95) / buy - 1) * 100;
-
-    if (profitPct < opts.minProfitPct) continue;
-
-    recs.push({
-      cardId: card.cardId,
-      buy,
-      minSell,
-      expectedSell,
-      expectedProfitPct: Math.round(profitPct * 10) / 10,
-      confidence: Math.min(92, 55 + profitPct * 2),
-      risk: profitPct > 20 ? "MEDIUM" : "LOW",
-      reasons: ["Estimated market value", "Hype & sentiment weighted"]
-    });
+  async function load() {
+    try {
+      const res = await apiGet<any>(
+        `/predictions/recommendations?budget=${budget}&minProfitPct=${minProfit}`
+      );
+      setRecs(res.recommendations || []);
+      setError(null);
+    } catch (e: any) {
+      setError(e.message);
+    }
   }
 
-  return recs.sort((a, b) => b.expectedProfitPct - a.expectedProfitPct).slice(0, 30);
+  useEffect(() => {
+    load();
+  }, [budget, minProfit]);
+
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
+
+  if (!recs.length) {
+    return <div>Keine Empfehlungen gefunden.</div>;
+  }
+
+  return (
+    <div className="recs">
+      {recs.map(r => (
+        <div key={r.cardId} className="rec">
+          <b>{r.cardId}</b>
+          <div>Buy: {r.buy}</div>
+          <div>Min Sell: {r.minSell}</div>
+          <div>Profit: {r.expectedProfitPct}%</div>
+          <div>Confidence: {r.confidence}</div>
+          <div>Risk: {r.risk}</div>
+        </div>
+      ))}
+    </div>
+  );
 }

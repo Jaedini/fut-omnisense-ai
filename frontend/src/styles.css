@@ -1,19 +1,156 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  color-scheme: dark;
-}
-
+/* ===== Reset & Base ===== */
 * {
-  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
-.cardGlass {
-  background: radial-gradient(1200px circle at 10% 0%, rgba(59,130,246,0.18), transparent 45%),
-              radial-gradient(900px circle at 90% 20%, rgba(16,185,129,0.12), transparent 45%),
-              rgba(2,6,23,0.72);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.08);
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: radial-gradient(1200px 600px at 10% -10%, #1f2937, #020617);
+  color: #e5e7eb;
+}
+
+/* ===== Layout ===== */
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+h1 {
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+}
+
+h2 {
+  margin-top: 32px;
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+}
+
+/* ===== Buttons ===== */
+button {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(59,130,246,0.35);
+}
+
+button:hover {
+  opacity: 0.92;
+}
+
+/* ===== Panels ===== */
+.panel {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+}
+
+.panel-title {
+  margin-bottom: 12px;
+}
+
+.panel.info {
+  color: #93c5fd;
+}
+
+.panel.error {
+  background: rgba(127, 29, 29, 0.6);
+  color: #fecaca;
+}
+
+.panel.muted {
+  opacity: 0.7;
+}
+
+/* ===== Rules ===== */
+.rules > div {
+  margin-bottom: 14px;
+}
+
+.rules label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+/* ===== Recommendations ===== */
+.recommendations {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.rec {
+  background: rgba(2, 6, 23, 0.7);
+  border-radius: 14px;
+  padding: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.rec-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.confidence {
+  font-weight: 700;
+  color: #22c55e;
+}
+
+.profit {
+  margin-top: 6px;
+  font-weight: 700;
+  color: #22c55e;
+}
+
+/* Risk Colors */
+.risk-low {
+  border-color: rgba(34,197,94,0.4);
+}
+
+.risk-medium {
+  border-color: rgba(251,191,36,0.4);
+}
+
+.risk-high {
+  border-color: rgba(239,68,68,0.4);
+}
+
+/* ===== Cards ===== */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.card {
+  background: rgba(2, 6, 23, 0.6);
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(148,163,184,0.12);
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 640px) {
+  .app {
+    padding: 16px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
 }

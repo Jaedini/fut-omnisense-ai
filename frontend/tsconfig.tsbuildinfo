@@ -1,1 +1,1 @@
-{"root":["./src/main.tsx","./src/components/consentbox.tsx","./src/components/dashboard.tsx","./src/pages/app.tsx","./src/services/api.ts","./src/services/consent.ts","./src/services/format.ts"],"version":"5.9.3"}
+{"root":["./src/app.tsx","./src/api.ts","./src/main.tsx","./src/vite-env.d.ts","./src/components/cardslist.tsx","./src/components/consentbox.tsx","./src/components/recommendations.tsx","./src/components/rulespanel.tsx","./src/services/api.ts","./src/services/consent.ts","./src/services/format.ts"],"version":"5.9.3"}

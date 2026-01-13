@@ -34,7 +34,7 @@ export function CardsList() {
 
   return (
     <div className="cards-grid">
-      {cards.map(c => (
+      {cards.map((c: any) => (
         <div key={c.cardId} className="card">
           <b>{c.name}</b>
           <div>ID: {c.cardId}</div>

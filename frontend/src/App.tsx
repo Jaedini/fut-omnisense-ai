@@ -6,6 +6,7 @@ import { RulesPanel } from "./components/RulesPanel";
 export default function App() {
   const [budget, setBudget] = useState(50000);
   const [minProfit, setMinProfit] = useState(10);
+  const [refreshToken, setRefreshToken] = useState(0);
 
   return (
     <div className="app">
@@ -18,14 +19,18 @@ export default function App() {
         setMinProfit={setMinProfit}
       />
 
-      <button onClick={() => location.reload()}>
+      <button
+        onClick={() => setRefreshToken(t => t + 1)}
+        style={{ margin: "12px 0" }}
+      >
         Refresh
       </button>
 
       <h2>Empfehlungen</h2>
       <Recommendations
         budget={budget}
-        minProfit={minProfit}
+        minProfitPct={minProfit}
+        refreshToken={refreshToken}
       />
 
       <h2>Karten</h2>

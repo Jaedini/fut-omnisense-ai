@@ -1,0 +1,62 @@
+name = "fut-omnisense-api"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+[vars]
+
+
+# Public (non-secret) config
+WORKER_PUBLIC_BASE = "https://fut-omnisense-api.jaedenhommel.workers.dev"
+DEFAULT_BUDGET = "50000"
+DEFAULT_MIN_PROFIT = "10"
+CRON_UPDATE_PRICES = "1"
+CRON_SAVE = "1"
+EVENT_COOLDOWN_DAYS = "7"
+
+
+
+
+# Crawler
+CRAWL_MAX_ITEMS_PER_SOURCE = "40"
+CRAWL_TIMEOUT_MS = "12000"
+CRAWL_USER_AGENT = "fut-omnisense-ai/1.0 (+public crawler)"
+CRAWL_QUERIES = "EA FC 26 FUT trading,EA FC 26 SBC,EA FC 26 market crash,FUT investments,EA FC patch notes,Ultimate Team meta"
+CRAWL_CONCURRENCY = "3"
+CRAWL_RUNALL_LOCK_SEC = "240"
+
+ENABLE_YOUTUBE_RSS = "true"
+ENABLE_REDDIT_RSS = "true"
+ENABLE_GOOGLE_NEWS_RSS = "true"
+ENABLE_EA_NEWS_RSS = "true"
+
+# OpenAI (KEY kommt als SECRET, hier nur Model/Timeout)
+OPENAI_MODEL = "gpt-4o-mini"
+OPENAI_TIMEOUT_MS = "12000"
+
+# Prices (optional)
+PRICE_SOURCE_URLS = ""
+PRICE_UPDATE_CONCURRENCY = "4"
+
+# Learning
+EVAL_HOURS = "6"
+EVAL_MAX_RUNS = "50"
+
+# EA Ratings
+EA_RATINGS_BASE = "https://drop-api.ea.com/rating"
+EA_GAME_CODE = "ea-sports-fc"
+EA_SYNC_PAGE_SIZE = "100"
+EA_SYNC_MAX_PAGES = "80"
+EA_SYNC_TIMEOUT_MS = "12000"
+
+# If you still use Upstash in some code, keep only URL here (token secret)
+REDIS_URL = "https://direct-cobra-38036.upstash.io"
+
+
+[[d1_databases]]
+binding = "DB"
+database_name = "fut-ai-db"
+database_id = "e43b0bcc-f637-4146-90fc-591af9f9e252"
+
+
+[triggers]
+crons = ["*/15 * * * *"]

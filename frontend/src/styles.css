@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cardGlass {
+  background: radial-gradient(1200px circle at 10% 0%, rgba(59,130,246,0.18), transparent 45%),
+              radial-gradient(900px circle at 90% 20%, rgba(16,185,129,0.12), transparent 45%),
+              rgba(2,6,23,0.72);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.08);
+}

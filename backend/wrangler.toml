@@ -1,4 +1,4 @@
-name = "fut-omnisense-api"
+name = "fut-omnisense-ai"
 main = "src/index.ts"
 compatibility_date = "2025-01-01"
 
